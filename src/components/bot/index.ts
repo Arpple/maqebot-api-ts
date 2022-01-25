@@ -16,7 +16,7 @@ export namespace Bot {
 
 	export type T = view.T
 	export type SerialNumber = string
-	export class InvalidCommandError extends bot.InvliadCommandError {}
+	export import InvalidCommandError = bot.InvliadCommandError
 
 	export type Create = () => Promise<[SerialNumber, T]>
 	export const create = (repo: Repo, gen: GenSerial): Create  =>

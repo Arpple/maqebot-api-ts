@@ -1,0 +1,19 @@
+:url = http://localhost:3000
+:serial = 1643131551011
+
+#
+# create
+#
+POST :url/bots
+
+
+#
+# command
+#
+PUT :url/bots/:serial
+Content-Type: application/json
+Accept: application/json
+
+{
+  "command": "X"
+}

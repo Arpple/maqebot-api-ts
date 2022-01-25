@@ -1,11 +1,15 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { Api } from '.'
 import { Bot } from '../../components/bot'
+import * as response from './response'
 
 require('express-async-errors')
 
-export const create = (deps: Api.Deps) => {
+export type Deps = {
+	bot: Bot.I,
+}
+
+export const create = (deps: Deps) => {
 	const app = express()
 
 	app.use(bodyParser.json())
@@ -28,7 +32,7 @@ export const create = (deps: Api.Deps) => {
 			return res.status(200).send({ state })
 		} catch (err: any) {
 			if (err instanceof Bot.InvalidCommandError) {
-				return res.status(422).send(err)
+				return res.status(422).send(response.error(err))
 			}
 
 			throw err
@@ -36,6 +40,7 @@ export const create = (deps: Api.Deps) => {
 	})
 
 	app.use((err: any, _req: any, res: any, _next: any) => {
+		console.error(err)
 		return res.status(500).send('Internal Error')
 	})
 
